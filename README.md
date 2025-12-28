@@ -21,16 +21,16 @@
 
 | SL | Student Name | ID | Role |
 |:--:|:---|:---|:---|
-| 1 | **MD NAHID MAHMUD** | 2024100000194 | 👔 Project Manager & Report Lead |
-| 2 | **ASHRAFUL KHAN** | 2024100000236 | 💻 Lead Developer |
-| 3 | **SHANTA CHANDRA RAKSHIT** | 2024100000235 | 🧠 Algorithm Specialist |
-| 4 | **MOHAMMAD YEASIN** | 2023200000075 | 📊 Data Analyst |
-| 5 | **ANISUL HAQUE SHIHAB** | 2024100000168 | ✅ Quality Assurance (QA) |
-| 6 | **FATEMA AL ISLAM** | 2024100000161 | 🔍 Research Associate |
-| 7 | **SHAJEDUL ISLAM FAHIM** | 2024100000434 | 🎨 Visual Designer |
-| 8 | **MUHAMMAD SYDUL ISLAM** | 2024100000409 | 📝 Documentation Specialist |
-| 9 | **AINUN NAHAR KONA** | 2024100000433 | 🐛 Debugger |
-| 10 | **FATEMA TABASSUM RIM** | 2024100000171 | 🎤 Presenter |
+| 1 | **MD NAHID MAHMUD** | 2024100000194 |  Project Manager & Report Lead |
+| 2 | **ASHRAFUL KHAN** | 2024100000236 |  Lead Developer |
+| 3 | **SHANTA CHANDRA RAKSHIT** | 2024100000235 |  Algorithm Specialist |
+| 4 | **MOHAMMAD YEASIN** | 2023200000075 |  Data Analyst |
+| 5 | **ANISUL HAQUE SHIHAB** | 2024100000168 |  Quality Assurance (QA) |
+| 6 | **FATEMA AL ISLAM** | 2024100000161 |  Research Associate |
+| 7 | **SHAJEDUL ISLAM FAHIM** | 2024100000434 |  Visual Designer |
+| 8 | **MUHAMMAD SYDUL ISLAM** | 2024100000409 |  Documentation Specialist |
+| 9 | **AINUN NAHAR KONA** | 2024100000433 |  Debugger |
+| 10 | **FATEMA TABASSUM RIM** | 2024100000171 |  Presenter |
 
 ---
 
