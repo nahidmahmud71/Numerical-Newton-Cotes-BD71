@@ -154,3 +154,21 @@ def run_experiment(func_info):
         val = simpson_38_rule(f, a, b, n=3)
         print(f"{'Simpson 3/8':<20} {3:<15} {val:<20.6f} {abs(val - exact_val):<15.6f}")
     except Exception as e: print(e)
+         # --- Step 3: Convergence Analysis (Full Table) ---
+    print("\n[3] CONVERGENCE DATA TABLE (High n)")
+    n_values = [6, 12, 18, 24, 30, 60] 
+    h_values = []
+    errors = {'Trap': [], 'Simp13': [], 'Simp38': []}
+
+    # Print Table Header
+    print(f"{'n':<5} {'Trapezoidal':<15} {'Simpson 1/3':<15} {'Simpson 3/8':<15}")
+    print("-" * 55)
+
+    for n in n_values:
+        h = (b - a) / n
+        h_values.append(h)
+        
+        try:
+            v_trap = trapezoidal_rule(f, a, b, n)
+            v_s13 = simpson_13_rule(f, a, b, n)
+            v_s38 = simpson_38_rule(f, a, b, n)
