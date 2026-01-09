@@ -1,119 +1,119 @@
+"""
+Numerical Integration Analysis (CSE 261)
+Team BD71
+
+This script implements:
+1. Trapezoidal Rule
+2. Simpson's 1/3 Rule
+3. Simpson's 3/8 Rule
++ Adds Area Visualization and Convergence Analysis.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Import custom modules
-from trapezoidal import trapezoidal_rule
-from simpson13 import simpson_13_rule
-from simpson38 import simpson_38_rule
-
-def run_experiment(func_info):
-    name = func_info['name']
-    f = func_info['f']
-    get_integral = func_info['integral']
-    a = func_info['a']
-    b = func_info['b']
-    filename = func_info['filename']
-
-    exact_val = get_integral(b) - get_integral(a)
+# ---------------------------------------------------------
+# 1. Trapezoidal Rule (Matches Report Listing 1)
+# ---------------------------------------------------------
+def trapezoidal_rule(f, a, b, n):
+    """
+    Approximates integral using Trapezoidal Rule.
+    """
+    h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
     
-    print(f"\n{'='*70}")
-    print(f"ANALYSIS FOR FUNCTION: {name}")
-    print(f"Range: [{a}, {b}] | Exact Value: {exact_val:.6f}")
-    print(f"{'='*70}")
+    # Formula: (h/2) * [y0 + 2*sum(intermediates) + yn]
+    integral = (h / 2) * (y[0] + 2 * np.sum(y[1:-1]) + y[-1])
+    return integral
 
-    print("\n--- A. SIMPLE RULES (Single Segment Application) ---")
-    print(f"{'Method':<20} {'n (Segments)':<15} {'Calculated Value':<20} {'Error':<15}")
-    print("-" * 70)
+# ---------------------------------------------------------
+# 2. Simpson's 1/3 Rule (Matches Report Listing 2)
+# ---------------------------------------------------------
+def simpson_13_rule(f, a, b, n):
+    """
+    Approximates integral using Simpson's 1/3 Rule.
+    Requires 'n' to be even.
+    """
+    if n % 2 != 0:
+        raise ValueError("n must be even for Simpson's 1/3 Rule")
     
+    h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
+    
+    # Formula: (h/3) * [y0 + 4*sum(odd) + 2*sum(even) + yn]
+    integral = (h / 3) * (y[0] + 4 * np.sum(y[1:-1:2]) + 2 * np.sum(y[2:-2:2]) + y[-1])
+    return integral
 
-    try:
-        val_trap_simple = trapezoidal_rule(f, a, b, n=1)
-        err_trap = abs(val_trap_simple - exact_val)
-        print(f"{'Trapezoidal':<20} {1:<15} {val_trap_simple:<20.6f} {err_trap:<15.6f}")
-    except Exception as e:
-        print(f"Trapezoidal Error: {e}")
-
-    try:
-        val_s13_simple = simpson_13_rule(f, a, b, n=2)
-        err_s13 = abs(val_s13_simple - exact_val)
-        print(f"{'Simpson 1/3':<20} {2:<15} {val_s13_simple:<20.6f} {err_s13:<15.6f}")
-    except Exception as e:
-        print(f"Simpson 1/3 Error: {e}")
-
-
-    try:
-        val_s38_simple = simpson_38_rule(f, a, b, n=3)
-        err_s38 = abs(val_s38_simple - exact_val)
-        print(f"{'Simpson 3/8':<20} {3:<15} {val_s38_simple:<20.6f} {err_s38:<15.6f}")
-    except Exception as e:
-        print(f"Simpson 3/8 Error: {e}")
-
-
-
-    print("\n\n--- B. COMPOSITE RULES (Convergence Table) ---")
-    n_values = [6, 12, 18, 24, 30, 60] 
-    h_values = []
-    errors = {'Trap': [], 'Simp13': [], 'Simp38': []}
-
-    print(f"{'n':<5} {'Trapezoidal':<15} {'Simpson 1/3':<15} {'Simpson 3/8':<15}")
-    print("-" * 55)
-
-    for n in n_values:
-        h = (b - a) / n
-        h_values.append(h)
+# ---------------------------------------------------------
+# 3. Simpson's 3/8 Rule (Matches Report Listing 3)
+# ---------------------------------------------------------
+def simpson_38_rule(f, a, b, n):
+    """
+    Approximates integral using Simpson's 3/8 Rule.
+    Requires 'n' to be a multiple of 3.
+    """
+    if n % 3 != 0:
+        raise ValueError("n must be a multiple of 3 for Simpson's 3/8 Rule")
         
-        try:
-            val_trap = trapezoidal_rule(f, a, b, n)
-            val_s13 = simpson_13_rule(f, a, b, n)
-            val_s38 = simpson_38_rule(f, a, b, n)
+    h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
+    
+    # Iterative sum calculation (Matches Report Logic)
+    sum_rest = 0
+    for i in range(1, n):
+        if i % 3 == 0:
+            sum_rest += 2 * y[i]
+        else:
+            sum_rest += 3 * y[i]
             
-            err_trap = abs(val_trap - exact_val)
-            err_s13 = abs(val_s13 - exact_val)
-            err_s38 = abs(val_s38 - exact_val)
-            
-            errors['Trap'].append(err_trap)
-            errors['Simp13'].append(err_s13)
-            errors['Simp38'].append(err_s38)
-            
-            print(f"{n:<5} {val_trap:<15.6f} {val_s13:<15.6f} {val_s38:<15.6f}")
-            
-        except ValueError as e:
-            print(f"Error: {e}")
+    # Formula: (3h/8) * [y0 + sum_rest + yn]
+    integral = (3 * h / 8) * (y[0] + sum_rest + y[-1])
+    return integral
 
+# ---------------------------------------------------------
+# Helper: Area Visualization Plotter
+# ---------------------------------------------------------
+def plot_area_visualization(f, a, b, name, filename):
+    """
+    Generates a plot showing the function curve and the area under it.
+    Visualizes the Trapezoidal approximation for n=6.
+    """
+    # High resolution for the smooth curve
+    x_smooth = np.linspace(a, b, 200)
+    y_smooth = f(x_smooth)
+    
+    # Low resolution for Trapezoidal segments (Visualization)
+    n_viz = 6
+    x_trap = np.linspace(a, b, n_viz + 1)
+    y_trap = f(x_trap)
+    
     plt.figure(figsize=(8, 5))
-    plt.loglog(h_values, errors['Trap'], '-o', label='Trapezoidal')
-    plt.loglog(h_values, errors['Simp13'], '-s', label="Simpson's 1/3")
-    plt.loglog(h_values, errors['Simp38'], '-^', label="Simpson's 3/8")
-    plt.xlabel('Step Size (h)')
-    plt.ylabel('Absolute Error (Log Scale)')
-    plt.title(f'Convergence Analysis: {name}')
-    plt.grid(True, which="both", ls="--")
+    
+    # 1. Plot the actual function
+    plt.plot(x_smooth, y_smooth, 'k-', linewidth=2, label=f'Exact Function: {name}')
+    
+    # 2. Fill the area (Exact Integration Area)
+    plt.fill_between(x_smooth, y_smooth, alpha=0.2, color='blue', label='Exact Area')
+    
+    # 3. Show Trapezoidal Segments (The Approximation)
+    plt.plot(x_trap, y_trap, 'r--o', label=f'Trapezoidal Approx (n={n_viz})', markersize=5)
+    for i in range(n_viz):
+        plt.vlines(x=x_trap[i], ymin=0, ymax=y_trap[i], color='red', linestyle=':', alpha=0.5)
+    
+    plt.title(f'Area Visualization: {name}')
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
     plt.legend()
-    plt.savefig(f'{filename}_convergence.png')
-    print(f"[Saved] Graph: {filename}_convergence.png")
+    plt.grid(True, alpha=0.3)
+    
+    # Save the plot
+    save_path = f'{filename}_visualization.png'
+    plt.savefig(save_path)
+    print(f"Visualization saved: {save_path}")
 
-def main():
-    test_cases = [
-        {
-            "name": "sin(x)",
-            "f": lambda x: np.sin(x),
-            "integral": lambda x: -np.cos(x),
-            "a": 0, 
-            "b": np.pi,
-            "filename": "sinx"
-        },
-        {
-            "name": "x^3 (Polynomial)",
-            "f": lambda x: x**3,
-            "integral": lambda x: (x**4)/4,
-            "a": 0, 
-            "b": 1,
-            "filename": "poly"
-        }
-    ]
-
-    for case in test_cases:
-        run_experiment(case)
-
-if __name__ == "__main__":
-    main()
+# ---------------------------------------------------------
+# Main Experiment Logic
+# ---------------------------------------------------------
