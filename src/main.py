@@ -196,3 +196,19 @@ def run_experiment(func_info):
     plt.legend()
     plt.savefig(f'{filename}_convergence.png')
     print(f"\n[Success] Convergence Graph saved: {filename}_convergence.png")
+    def main():
+    test_cases = [
+        {
+            "name": "sin(x)",
+            "f": lambda x: np.sin(x),
+            "integral": lambda x: -np.cos(x),
+            "a": 0, "b": np.pi, "filename": "sinx"
+        },
+        {
+            "name": "x^3",
+            "f": lambda x: x**3,
+            "integral": lambda x: (x**4)/4,
+            "a": 0, "b": 1, "filename": "poly"
+        }
+    ]
+
