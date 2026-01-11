@@ -196,7 +196,8 @@ def run_experiment(func_info):
     plt.legend()
     plt.savefig(f'{filename}_convergence.png')
     print(f"\n[Success] Convergence Graph saved: {filename}_convergence.png")
-    def main():
+    
+def main():
     test_cases = [
         {
             "name": "sin(x)",
@@ -211,7 +212,7 @@ def run_experiment(func_info):
             "a": 0, "b": 1, "filename": "poly"
         }
     ]
-   for case in test_cases:
+    for case in test_cases:
         run_experiment(case)
 
 if __name__ == "__main__":
