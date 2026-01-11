@@ -211,4 +211,8 @@ def run_experiment(func_info):
             "a": 0, "b": 1, "filename": "poly"
         }
     ]
+   for case in test_cases:
+        run_experiment(case)
 
+if __name__ == "__main__":
+    main()
