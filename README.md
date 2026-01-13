@@ -20,7 +20,7 @@ This project implements the **Newton-Cotes** closed integration formulas to solv
 
 ---
 
-## 👥 Team BD71 - Contributors
+## 👥 Team ANDROMEDA - Contributors
 **Department of Computer Science and Engineering**
 
 | Photo | Student Name | ID | Role |
@@ -74,7 +74,7 @@ Upon execution, statistical results will be displayed in the console, and visual
 
 📂 File Structure
 
-Numerical-Newton-Cotes-BD71/
+Numerical-Newton-Cotes-ANDROMEDA/
 │
 ├── results/                 # 📊 Generated Output Graphs
 │   ├── poly_convergence.png
