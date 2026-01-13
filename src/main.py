@@ -1,6 +1,6 @@
 """
 Numerical Integration Analysis (CSE 261)
-Team BD71
+Team Andromeda
 
 This script implements:
 1. Trapezoidal Rule
